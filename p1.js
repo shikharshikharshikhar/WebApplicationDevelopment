@@ -193,7 +193,7 @@ const serve = (req, res) => {
     let title = generateTitle(parts);
 
     try {
-        if (parts.length === 0) {
+        if (parts.length === " - ") {
             // Homepage
             content = generateHomepage();
         } else if (parts[0] === 'teams') {
@@ -211,6 +211,7 @@ const serve = (req, res) => {
             title = '404 - Page Not Found';
         }
 
+        const site = `https://project-1-sihc.onrender.com/`;
         const html = heading(title) + content + footing();
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.write(html);
@@ -225,7 +226,4 @@ const serve = (req, res) => {
     }
 }
 
-http.createServer(serve).listen(3000, () => {
-    console.log('Server running on port 3000');
-    console.log('Visit http://localhost:3000 to view the site');
-});
+http.createServer(serve).listen(3000);
