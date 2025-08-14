@@ -199,7 +199,7 @@ const serve = (req, res) => {
     let title = generateTitle(parts);
 
     try {
-        if (parts.length === " - ") {
+        if (parts.length === 0 || (parts.length === 1 && parts[0] === '')) {
             // Homepage
             console.log('Serving homepage');
             content = generateHomepage();
@@ -237,5 +237,6 @@ const serve = (req, res) => {
 }
 
 http.createServer(serve).listen(3000);
+
 
 
