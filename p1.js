@@ -173,7 +173,7 @@ const generateStandingsPage = (year, league, division) => {
 
 // Generate page title based on URL parts
 const generateTitle = (parts) => {
-    if (parts.length === 0 || parts[0] === '') {
+    if (parts.length === 0 || parts[0] === ' - ') {
         return 'MLB Standings Home';
     } else if (parts[0] === 'teams') {
         return 'All Teams';
@@ -237,4 +237,5 @@ const serve = (req, res) => {
 }
 
 http.createServer(serve).listen(3000);
+
 
