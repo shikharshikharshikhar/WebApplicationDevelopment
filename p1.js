@@ -2,8 +2,10 @@ const http = require('http');
 const url = require('url');
 
 // Import our static data
+console.log('Loading data files...');
 const teams = require('./teams.json');
 const all_standings = require('./standings.json');
+console.log(`Loaded ${teams.length} teams and ${all_standings.length} standings records`);
 
 // Some basic lists derived from the standings
 const years = Array.from(new Set(all_standings.map(s => s.year)));
@@ -189,24 +191,32 @@ const serve = (req, res) => {
     const uri = url.parse(req.url).pathname;
     const parts = uri.split('/').filter(part => part !== ''); // Remove empty strings
 
+    console.log('Request URL:', req.url);
+    console.log('Parsed URI:', uri);
+    console.log('Parts:', parts);
+    
     let content = '';
     let title = generateTitle(parts);
 
     try {
         if (parts.length === " - ") {
             // Homepage
+            console.log('Serving homepage');
             content = generateHomepage();
         } else if (parts[0] === 'teams') {
             // Teams page
+            console.log('Serving teams page');
             content = generateTeamsPage();
         } else if (parts[0] === 'standings') {
             // Standings pages
+            console.log('Serving standings page')
             const year = parts[1] || null;
             const league = parts[2] || null;
             const division = parts[3] || null;
             content = generateStandingsPage(year, league, division);
         } else {
             // 404 case
+            console.log('404 - Unknown route');
             content = '<p>Page not found</p>';
             title = '404 - Page Not Found';
         }
@@ -227,3 +237,4 @@ const serve = (req, res) => {
 }
 
 http.createServer(serve).listen(3000);
+
